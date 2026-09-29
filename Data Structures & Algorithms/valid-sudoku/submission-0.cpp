@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+
+        vector<unordered_set<int>> boxes(9);
+        for(int i = 0; i < 9; ++i) {
+            unordered_set<int> row, col;
+            for(int j = 0; j < 9; ++j) {
+                cout << "row: " << i << " col: " << j << endl;
+                // check row
+                int row_item = board[i][j] - '0';
+                if(row_item >= 0) {
+                    if(row.find(row_item) == row.end()) {
+                        row.insert(row_item);
+                    }
+                    else    return false;
+                }
+
+                //check col
+                int col_item = board[j][i] - '0';
+                if(col_item >= 0) {
+                    if(col.find(col_item) == col.end()) {
+                        col.insert(col_item);
+                    }
+                    else    return false;
+                }
+
+                //check box
+                if(row_item >= 0) {
+                    int box = floor(j / 3) + floor(i / 3) * 3;
+                    if(boxes[box].find(row_item) == boxes[box].end()) {
+                        boxes[box].insert(row_item);
+                    }
+                    else    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
